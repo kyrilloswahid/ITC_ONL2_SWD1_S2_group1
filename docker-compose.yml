@@ -1,0 +1,40 @@
+services:
+
+  # MongoDB service
+  todo-database:
+    image: mongo:6
+    container_name: todo-database
+    restart: always
+    ports:
+      - "27017:27017"        # host:container
+    volumes:
+      - todo-volume:/data/db
+    networks:
+      - todo-net
+
+  # Node.js/EJS Todo API
+  todo-server:
+    build:
+      context: ./todo-src
+      dockerfile: Dockerfile
+    image: todo-server
+    container_name: todo-server
+    restart: on-failure
+    ports:
+      - "3000:3000"         # host:container
+    env_file:
+      - ./todo-src/.env     # your app’s .env (see below)
+    depends_on:
+      - todo-database
+    networks:
+      - todo-net
+
+# named volume to persist Mongo data
+volumes:
+  todo-volume:
+
+# private bridge network
+networks:
+  todo-net:
+    driver: bridge
+
