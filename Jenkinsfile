@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('todo-src') {
                     sh 'npm install'
-                    sh 'npm run lint'
+                    sh 'npm run lint:check'
                     sh 'npm audit'
                 }
             }
