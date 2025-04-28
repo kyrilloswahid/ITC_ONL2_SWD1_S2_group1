@@ -6,6 +6,7 @@ pipeline {
         DOCKER_TAG = "ci-${env.BUILD_ID}"
     }
 
+    stages {
         stage('Build Docker Image') {
             steps {
                 dir('todo-src') {
@@ -20,7 +21,6 @@ pipeline {
                     sh 'npm install'
                     sh 'npm run lint'
                     sh 'npm audit'
-                    // Optional if you have tests: sh 'npm test'
                 }
             }
         }
@@ -42,3 +42,4 @@ pipeline {
         }
     }
 }
+
