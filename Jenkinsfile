@@ -6,13 +6,6 @@ pipeline {
         DOCKER_TAG = "ci-${env.BUILD_ID}"
     }
 
-    stages {
-        stage('Clone Repo') {
-            steps {
-                git 'https://github.com/yossefHanyMohammed/ITC_ONL2_SWD1_S2_group1.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 dir('todo-src') {
