@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import ToDoData from '../models/todoModel.js'
-import { LIMIT, errorLog, successLog } from '../utils/constants.js'
+import { LIMIT, errorLog } from '../utils/constants.js'
 
 export const addTODO = async (req, res) => {
 	const newTodo = new ToDoData({
