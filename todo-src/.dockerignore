@@ -5,7 +5,6 @@
 .env
 Dockerfile
 node_modules
-README
 README.md
 LICENSE
 LICENSE.md
