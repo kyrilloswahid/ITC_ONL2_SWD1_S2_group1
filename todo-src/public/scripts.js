@@ -88,16 +88,30 @@ window.addEventListener('load', () => {
 		list.innerHTML = ''
 		todoList.forEach((todo) => {
 			const li = document.createElement('li')
-			const div = document.createElement('div')
+			const container = document.createElement('div') // <<== FLEX container
+			const textContainer = document.createElement('div')
 			const buttons = document.createElement('div')
+			const doneBtn = document.createElement('button')
 			const editBtn = document.createElement('button')
 			const deleteBtn = document.createElement('button')
 
-			div.innerText = todo.todo
+			textContainer.innerText = todo.todo
 
+			container.className = 'todo-container' // <<== new class for flexbox
+			textContainer.className = 'text-container'
 			buttons.className = 'actions'
+			doneBtn.className = 'icon-btn'
 			editBtn.className = 'icon-btn'
 			deleteBtn.className = 'icon-btn'
+
+			doneBtn.onclick = () => {
+				textContainer.classList.toggle('done')
+			}
+			doneBtn.innerHTML = `
+				<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em">
+					<path d="M9 16.17l-3.5-3.5L4 14.17l5 5 12-12-1.41-1.41z"></path>
+				</svg>
+			`
 
 			editBtn.onclick = () => {
 				console.log(todo.todo)
@@ -119,6 +133,7 @@ window.addEventListener('load', () => {
 				</svg>
 			`
 
+			buttons.appendChild(doneBtn)
 			buttons.appendChild(editBtn)
 			buttons.appendChild(deleteBtn)
 
@@ -140,18 +155,19 @@ window.addEventListener('load', () => {
 			const dateSmall = document.createElement('small')
 			dateSmall.style.display = 'block'
 			dateSmall.style.marginTop = '4px'
-			dateSmall.style.color = 'gray' // Optional: make it lighter
+			dateSmall.style.color = 'gray'
+			dateSmall.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
 			dateSmall.innerText = `Added: ${displayDate}`
 
-			div.appendChild(dateSmall)
+			textContainer.appendChild(dateSmall)
 			// ====== End of Inserted code ======
 
-			div.appendChild(buttons)
-			li.appendChild(div)
+			container.appendChild(textContainer)
+			container.appendChild(buttons)
+			li.appendChild(container)
 
 			list.appendChild(li)
 		})
-		mainEl.appendChild(list)
 	}
 
 	const handleSignout = () => {
@@ -180,14 +196,9 @@ window.addEventListener('load', () => {
 	fetchNrder(true, false, true)
 
 	todoForm.addEventListener('submit', handleAdd)
-
 	signOutBtn.addEventListener('click', handleSignout)
-
 	document.getElementById('clear-all').addEventListener('click', handleDeleteAll)
-
 	document.getElementById('clear-sessions').addEventListener('click', clearAllSessions)
-
-	// load more
 	document.getElementById('load-more-btn').addEventListener('click', () => {
 		fetchNrder()
 	})
@@ -202,4 +213,3 @@ window.addEventListener('load', () => {
 		}
 	})
 })
-

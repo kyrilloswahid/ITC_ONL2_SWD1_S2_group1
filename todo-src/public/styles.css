@@ -167,3 +167,31 @@ a:hover,
 		background-color: #f9f9f9;
 	}
 }
+
+/* ================== Added Clean Polished Enhancements ================== */
+
+.todo-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.text-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.done {
+	text-decoration: line-through;
+	opacity: 0.5;
+	transform: scale(0.98);
+	color: #bbbbbb;
+	transition: all 0.3s ease;
+}
+
+button.icon-btn:hover {
+	background-color: rgba(0, 183, 195, 0.15);
+	transform: scale(1.05);
+	transition: all 0.3s ease;
+}
