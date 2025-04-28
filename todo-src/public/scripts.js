@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 window.addEventListener('load', () => {
 	let todoList = []
 
