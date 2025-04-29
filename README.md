@@ -20,9 +20,9 @@ This repository was originally cloned from [bytebane/TodoApp](https://github.com
   
 **Enhancements:**
 - Mark tasks as "Done" with automatic strikethrough.
-- Display creation and completion dates for each task.
+- Display creation dates for each task.
 - Responsive design with smooth hover animations.
-- Improved overall layout and consistency.
+- Improved overall layout and alignments.
 
 ---
 
