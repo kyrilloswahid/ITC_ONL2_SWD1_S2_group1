@@ -41,4 +41,8 @@ This repository was originally cloned from [bytebane/TodoApp](https://github.com
 
 ---
 
-## DevOps Practices Applied
+## DevOps Integration
+
+---
+
+## Getting Started 
