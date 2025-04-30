@@ -1,0 +1,5 @@
+- name: Deploy Todo App on EC2
+  hosts: web
+  become: true
+  roles:
+    - deploy
