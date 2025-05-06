@@ -42,9 +42,7 @@ This repository was originally cloned from [bytebane/TodoApp](https://github.com
 ---
 
 ## DevOps Integration
-1. Docker
-2. Jenkins
-3. Ansible
+1. 
 ---
 
 ## Getting Started 
