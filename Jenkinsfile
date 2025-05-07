@@ -58,7 +58,7 @@ pipeline {
         stage('Deploy to EC2 via Ansible') {
             steps {
                 dir('ansible') {
-                    sh 'ansible-playbook -i inventory playbook.yml'
+                    sh 'ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory playbook.yml'
                 }
             }
         }
