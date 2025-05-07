@@ -7,6 +7,34 @@ pipeline {
     }
 
     stages {
+        stage('Install Dependencies') {
+            steps {
+                dir('todo-src') {
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('Run Lint & Security Checks in Parallel') {
+            parallel {
+                stage('Lint') {
+                    steps {
+                        dir('todo-src') {
+                            sh 'npm run lint:check'
+                        }
+                    }
+                }
+
+                stage('Security Audit') {
+                    steps {
+                        dir('todo-src') {
+                            sh 'npm audit'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 dir('todo-src') {
@@ -20,27 +48,18 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker tag todo-server ${DOCKER_USER}/todo-server:ci-${BUILD_ID}
-                        docker push ${DOCKER_USER}/todo-server:ci-${BUILD_ID}
+                        docker tag $DOCKER_IMAGE:$DOCKER_TAG $DOCKER_USER/$DOCKER_IMAGE:$DOCKER_TAG
+                        docker push $DOCKER_USER/$DOCKER_IMAGE:$DOCKER_TAG
                     '''
-        }
-    }
-}
-
-        stage('Run Tests') {
-            steps {
-                dir('todo-src') {
-                    sh 'npm install'
-                    sh 'npm run lint:check'
-                    sh 'npm audit'
                 }
             }
         }
 
-        stage('Deploy with Docker Compose') {
+        stage('Deploy to EC2 via Ansible') {
             steps {
-                sh 'docker compose down'
-                sh 'docker compose up --build -d'
+                dir('ansible') {
+                    sh 'ansible-playbook -i inventory deploy.yml'
+                }
             }
         }
     }
@@ -63,3 +82,4 @@ pipeline {
         }
     }
 }
+
