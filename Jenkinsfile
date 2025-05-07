@@ -58,7 +58,7 @@ pipeline {
         stage('Deploy to EC2 via Ansible') {
             steps {
                 dir('ansible') {
-                    sh 'ansible-playbook -i inventory deploy.yml'
+                    sh 'ansible-playbook -i inventory playbook.yml'
                 }
             }
         }
