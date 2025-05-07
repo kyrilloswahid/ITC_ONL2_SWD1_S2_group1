@@ -7,25 +7,25 @@ pipeline {
         ANSIBLE_HOST_KEY_CHECKING = 'False'
     }
 
-stage('Provision Infrastructure with Terraform') {
-    steps {
-        withCredentials([
-            string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY'),
-            string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_KEY')
-        ]) {
-            dir('terraform') {
-                sh '''
-                export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY
-                export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY
-                terraform init
-                terraform apply -auto-approve
-                '''
+    stages {
+        stage('Provision Infrastructure with Terraform') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY'),
+                    string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_KEY')
+                ]) {
+                    dir('terraform') {
+                        sh '''
+                        export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY
+                        export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY
+                        terraform init
+                        terraform apply -auto-approve
+                        '''
+                    }
+                }
             }
         }
-    }
-}
 
-    stages {
         stage('Install Dependencies') {
             steps {
                 dir('todo-src') {
