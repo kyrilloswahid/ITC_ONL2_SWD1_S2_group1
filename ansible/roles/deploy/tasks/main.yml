@@ -1,0 +1,54 @@
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Create Docker network
+  community.docker.docker_network:
+    name: mongodb-network
+    state: present
+
+- name: Pull MongoDB image
+  community.docker.docker_image:
+    name: mongo
+    tag: "4.4"
+    source: pull
+
+- name: Pull app image
+  community.docker.docker_image:
+    name: kyrilloswahid/todo-server
+    tag: latest
+    source: pull
+
+- name: Run MongoDB container
+  community.docker.docker_container:
+    name: todo-database
+    image: mongo:4.4
+    state: started
+    restart_policy: always
+    published_ports:
+      - "27017:27017"
+    networks:
+      - name: mongodb-network
+
+- name: Run Todo App container
+  community.docker.docker_container:
+    name: todo-server
+    image: kyrilloswahid/todo-server:latest
+    state: started
+    restart_policy: always
+    published_ports:
+      - "3000:3000"
+    env:
+      DB_URL: "mongodb://todo-database:27017/todo-app"
+      SESSION_KEY: "my_secret_key"
+      PORT: "3000"
+    networks:
+      - name: mongodb-network
