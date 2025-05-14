@@ -11,5 +11,6 @@ variable "key_name" {
 }
 
 variable "my_ip" {
-  default     = "45.243.71.126/32"
+  default = "41.129.84.154/32"
 }
+
