@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-server
-        image: kyrilloswahid/todo-server:ci-${BUILD_ID}
+        image: kyrilloswahid/todo-server:latest
         ports:
         - containerPort: 3000
         envFrom:

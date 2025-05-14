@@ -3,8 +3,7 @@ kind: ConfigMap
 metadata:
   name: todo-server-env
 data:
-  .env: |
-    DB_URL=mongodb://todo-database:27017/todo-app
-    SESSION_KEY=my_secret_key
-    PORT=3000
+  DB_URL: mongodb://todo-database:27017/todo-app
+  SESSION_KEY: my_secret_key
+  PORT: "3000"
 
