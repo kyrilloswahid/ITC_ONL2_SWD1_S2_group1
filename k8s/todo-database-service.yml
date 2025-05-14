@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-database
+  labels:
+    app: todo-database
+spec:
+  ports:
+  - protocol: TCP
+    port: 27017       # External Port
+    targetPort: 27017  # Internal Port
+  selector:
+    app: todo-database

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-server
+  labels:
+    app: todo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-server
+  template:
+    metadata:
+      labels:
+        app: todo-server
+    spec:
+      containers:
+      - name: todo-server
+        image: kyrilloswahid/todo-server:ci-${BUILD_ID}
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: todo-server-env
+        volumeMounts:
+        - name: env-file
+          mountPath: /app/.env  # Mount the actual .env file
+          subPath: .env  # Only the file, not the whole folder
+      volumes:
+      - name: env-file
+        configMap:
+          name: todo-server-env
+
