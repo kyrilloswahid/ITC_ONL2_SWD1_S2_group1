@@ -80,6 +80,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes Locally') {
+            steps {
+                script {
+                    sh '''
+                        kubectl apply -f k8s/
+                        kubectl rollout status deployment/todo-server
+                    '''
+                }
+            }
+        }
     }
 
     post {
