@@ -42,6 +42,7 @@ This repository was originally cloned from [bytebane/TodoApp](https://github.com
 ---
 
 ## DevOps Integration
+![image](/assets/Pipeline.png)
 1. 
 ---
 
